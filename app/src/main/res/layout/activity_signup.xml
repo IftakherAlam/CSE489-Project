@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#ffbb00">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:gravity="center"
+            android:textSize="32sp"
+            android:textStyle="bold"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#ffff"
+            android:layout_margin="8dp"
+            android:padding="8dp">
+            <TableRow>
+                <TextView
+                    android:text="Name"/>
+                <TextView
+                    android:text=":"
+                    android:padding="4dp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="text"/>
+
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Email"/>
+                <TextView
+                    android:text=":"
+                    android:padding="4dp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="textEmailAddress"/>
+
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Phone"/>
+                <TextView
+                    android:text=":"
+                    android:padding="4dp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="phone"/>
+
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="User Id"/>
+                <TextView
+                    android:text=":"
+                    android:padding="4dp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="text"/>
+
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Password"/>
+                <TextView
+                    android:text=":"
+                    android:padding="4dp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="numberPassword"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Re-enter Password"/>
+                <TextView
+                    android:text=":"
+                    android:padding="4dp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="numberPassword"/>
+            </TableRow>
+            <CheckBox
+                android:text="Remember User Id"/>
+            <CheckBox
+                android:text="Remember Password"/>
+            <LinearLayout
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Already have account?"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Login"
+                    android:textColor="#0000bb"
+                    android:backgroundTint="@color/white"
+                    android:layout_marginLeft="8dp"/>
+            </LinearLayout>
+        </TableLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Exit"
+                android:backgroundTint="#ffbb00"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="|"
+                android:gravity="center"
+                android:textSize="24sp"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Go"
+                android:backgroundTint="#ffbb00"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
