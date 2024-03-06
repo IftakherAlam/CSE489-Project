@@ -3,6 +3,8 @@ package com.example.androidproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 public class Login extends AppCompatActivity {
 
