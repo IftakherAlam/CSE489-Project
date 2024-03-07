@@ -2,19 +2,25 @@ package com.example.androidproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class Signup extends AppCompatActivity {
-    private EditText etUserName,etEmail,etPhone,etUserId,etPW,etRPW;
-    private CheckBox cbRemUserId,cbRemPawss;
+    private EditText etUserName, etEmail, etPhone, etUserId, etPW, etRPW;
+    private CheckBox cbRemUserId, cbRemPawss;
+    private Button btnLogin, btnGo, btnExit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        decideNavigation();
         setContentView(R.layout.activity_signup);
 
         etUserName = findViewById(R.id.etUserName);
@@ -25,9 +31,7 @@ public class Signup extends AppCompatActivity {
         etRPW = findViewById(R.id.etRPW);
 
         cbRemUserId = findViewById(R.id.cbRemUserId);
-        cbRemPawss = findViewById((R.id.cbRemPass));
-
-
+        cbRemPawss = findViewById(R.id.cbRemPass);
 
         findViewById(R.id.btnExit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,10 +55,9 @@ public class Signup extends AppCompatActivity {
                 processSignup();
             }
         });
-
     }
 
-    private void processSignup(){
+    private void processSignup() {
         String userName = etUserName.getText().toString().trim();
         String userEmail = etEmail.getText().toString().trim();
         String userPhone = etPhone.getText().toString().trim();
@@ -63,23 +66,46 @@ public class Signup extends AppCompatActivity {
         String userRPW = etRPW.getText().toString().trim();
         String errMsg = "";
 
-
-//        check validatioin
-
-        if(userName.length() < 4 || userName.length() > 8){
-            errMsg += "Invalid User Name, ";
+        // Check validation
+        if (userName.isEmpty()) {
+            errMsg += "Invalid name, ";
         }
 
-        if(userPW.length() != 4 || userPW.equals(userRPW)){
-            errMsg+= "invalid password";
+        if (userEmail.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
+            errMsg += "Invalid Email, ";
         }
 
-        if(errMsg.length() > 0 ){
-            System.out.println(errMsg);
-            return;
+        if ((userPhone.startsWith("+880") && userPhone.length() == 14) ||
+                (userPhone.startsWith("880") && userPhone.length() == 13) ||
+                (userPhone.startsWith("01") && userPhone.length() == 11)) {
+
+        }
+        else
+        {
+            errMsg += "Invalid phone number, ";
         }
 
-        SharedPreferences sp = this.getSharedPreferences("user_info", MODE_PRIVATE);
+        // Check other fields
+        if (userPW.length() <= 4 || !userPW.equals(userRPW)) {
+            errMsg += "Invalid password, ";
+        }
+
+        // Display error message if any
+        if (!errMsg.isEmpty()) {
+            showErrorDialog(errMsg);
+            return; // Stop further execution if there are errors
+        }
+
+        // Save user information if there are no errors
+        saveUserInfo(userName, userId, userEmail, userPhone, userPW, cbRemPawss.isChecked(), cbRemUserId.isChecked());
+
+        // Show success message
+        showSuccessDialog();
+    }
+
+    private void saveUserInfo(String userName, String userId, String userEmail, String userPhone,
+                              String userPW, boolean rememberPassword, boolean rememberUserId) {
+        SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
         SharedPreferences.Editor e = sp.edit();
 
         e.putString("USER_NAME", userName);
@@ -87,9 +113,53 @@ public class Signup extends AppCompatActivity {
         e.putString("USER_EMAIL", userEmail);
         e.putString("USER_PHONE", userPhone);
         e.putString("PASSWORD", userPW);
-        e.putBoolean("REM_LOGIN", cbRemPawss.isChecked());
-        e.putBoolean("REM_USER", cbRemUserId.isChecked());
-        e.apply();
+        e.putBoolean("REM_PASS", rememberPassword);
+        e.putBoolean("REM_USER", rememberUserId);
+        e.apply(); // Apply changes asynchronously
+    }
 
+    private void showErrorDialog(String errorMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(errorMessage);
+        builder.setTitle("Error");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Back", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
+
+    private void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Signup Successful!");
+        builder.setTitle("Success");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(Signup.this, Login.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
+
+    private void decideNavigation() {
+        SharedPreferences sp = getSharedPreferences("my_info", MODE_PRIVATE);
+        boolean isLogged = sp.getBoolean("REM_LOGIN", false);
+        String userId = sp.getString("USER_ID", "");
+
+        if (isLogged) {
+            Intent i = new Intent(Signup.this, MainActivity.class);
+            i.putExtra("USER_ID", userId);
+            startActivity(i);
+            finish();
+        }
+    }
+}

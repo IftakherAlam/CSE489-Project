@@ -34,6 +34,7 @@
                     android:text=":"
                     android:padding="4dp"/>
                 <EditText
+                    android:id="@+id/etaUserId"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="text"/>
@@ -47,13 +48,16 @@
                     android:text=":"
                     android:padding="4dp"/>
                 <EditText
+                    android:id="@+id/etPassword"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="numberPassword"/>
             </TableRow>
             <CheckBox
+                android:id="@+id/cbRememberbUserId"
                 android:text="Remember User Id"/>
             <CheckBox
+                android:id="@+id/cbRembmberPassowrd"
                 android:text="Remember Password"/>
             <LinearLayout
                 android:orientation="horizontal">
@@ -62,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:text="Don't Have an account?"/>
                 <Button
+                    android:id="@+id/btnSignup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Signup"
@@ -75,6 +80,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/btn1Exit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -89,6 +95,7 @@
                 android:gravity="center"
                 android:textSize="24sp"/>
             <Button
+                android:id="@+id/btn1Go"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
